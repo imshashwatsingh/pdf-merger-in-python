@@ -6,6 +6,7 @@ from PyPDF2 import PdfMerger
 # Global variable to store selected PDF files
 pdf_files = []
 
+
 # Function to add files via file dialog
 def add_files():
     global pdf_files
