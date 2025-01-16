@@ -11,6 +11,7 @@ Welcome to the **PDF Merger Tool**! This easy-to-use tool allows you to merge mu
 - **Clear List**: Remove all files from the current list at any time.
 - **User-Friendly Interface**: Built with Tkinter for a clean, simple, and intuitive UI.
 
+
 ## Screenshots
 
 ![Screenshot](screenshot.png)  
