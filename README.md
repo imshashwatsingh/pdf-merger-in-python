@@ -14,7 +14,7 @@ Welcome to the **PDF Merger Tool**! This easy-to-use tool allows you to merge mu
 
 ## Screenshots
 
-[Screenshot](screenshot.png)  
+![Screenshot](./screenshot.png)  
 *Screenshot of the PDF Merger Tool UI.*
 
 ## Requirements
