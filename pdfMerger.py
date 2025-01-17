@@ -63,7 +63,7 @@ def handle_drop(event):
 
 # Main GUI setup using TkinterDnD for drag-and-drop
 root = TkinterDnD.Tk()  # Use TkinterDnD.Tk() instead of Tk()
-root.title("PDF Merger Tool")
+root.title("PDF Merger Tool by Shashwat")
 root.geometry("500x400")
 root.config(bg="#f4f4f4")
 
