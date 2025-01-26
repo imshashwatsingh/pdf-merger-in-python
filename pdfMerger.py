@@ -1,15 +1,15 @@
 import os
+from datetime import datetime
 from tkinter import Tk, Label, Button, Frame, filedialog, Listbox, Scrollbar, messagebox
-from tkinterdnd2 import TkinterDnD, DND_FILES  # Import drag-and-drop support
 from PyPDF2 import PdfMerger
 
 # Global variable to store selected PDF files
 pdf_files = []
 
-
 # Function to add files via file dialog
 def add_files():
     global pdf_files
+    
     files = filedialog.askopenfilenames(
         title="Select PDF Files",
         filetypes=[("PDF Files", "*.pdf")],
@@ -61,58 +61,138 @@ def handle_drop(event):
             pdf_files.append(file)
             file_listbox.insert("end", os.path.basename(file))
 
-# Main GUI setup using TkinterDnD for drag-and-drop
-root = TkinterDnD.Tk()  # Use TkinterDnD.Tk() instead of Tk()
+# moving the files
+
+def moveFileUP():
+    global pdf_files
+    selected_indices = file_listbox.curselection()
+    if not selected_indices:
+        return  # No selection
+
+    for index in selected_indices:
+        if index > 0:  # Ensure it's not the first item
+            # Swap in the list
+            pdf_files[index], pdf_files[index - 1] = pdf_files[index - 1], pdf_files[index]
+            
+            # Update the listbox
+            file_listbox.delete(index)
+            file_listbox.insert(index - 1, os.path.basename(pdf_files[index - 1]))
+            file_listbox.selection_set(index - 1)  # Maintain selection
+
+
+def moveFileDown():
+    global pdf_files
+    selected_indices = file_listbox.curselection()
+    if not selected_indices:
+        return  # No selection
+
+    for index in reversed(selected_indices):
+        if index < len(pdf_files) - 1:  # Ensure it's not the last item
+            # Swap in the list
+            pdf_files[index], pdf_files[index + 1] = pdf_files[index + 1], pdf_files[index]
+            
+            # Update the listbox
+            file_listbox.delete(index)
+            file_listbox.insert(index + 1, os.path.basename(pdf_files[index + 1]))
+            file_listbox.selection_set(index + 1)  # Maintain selection
+
+
+# Main GUI setup
+root = Tk()
 root.title("PDF Merger Tool by Shashwat")
-root.geometry("500x400")
+root.geometry("450x450")
 root.config(bg="#f4f4f4")
 
 # Title Label
 Label(
     root,
     text="PDF Merger Tool",
-    font=("Arial", 18, "bold"),
+    font=("Arial", 20, "bold"),
     fg="#333",
     bg="#f4f4f4",
 ).pack(pady=10)
 
-# Drag-and-drop frame
-drag_drop_frame = Frame(root, bg="#e0e0e0", height=150, width=400, relief="sunken", bd=2)
-drag_drop_frame.pack(pady=10)
-drag_drop_frame.pack_propagate(False)
-
+# Footer Label
 Label(
-    drag_drop_frame,
-    text="Drag and Drop PDF files here",
-    font=("Arial", 12),
-    fg="#666",
-    bg="#e0e0e0",
-).pack(expand=True)
+    root,
+    text="© All Rights Reserved "+ str(datetime.now().year) +" by Shashwat Singh",
+    font=("Arial", 10, "bold"),
+    fg="#555",  # Subtle gray color
+    bg="#f4f4f4"
+).pack(side="bottom", pady=10)
 
-# Register the drag-and-drop event
-drag_drop_frame.drop_target_register(DND_FILES)
-drag_drop_frame.dnd_bind('<<Drop>>', handle_drop)
 
 # Listbox for displaying selected files
 file_list_frame = Frame(root, bg="#f4f4f4")
-file_list_frame.pack(pady=10)
+file_list_frame.pack(pady=10, padx=20)
 
 scrollbar = Scrollbar(file_list_frame, orient="vertical")
 file_listbox = Listbox(
     file_list_frame,
-    width=60,
+    width=50,
     height=8,
     yscrollcommand=scrollbar.set,
     selectmode="multiple",
+    font=("Arial", 12),
 )
 scrollbar.config(command=file_listbox.yview)
 scrollbar.pack(side="right", fill="y")
 file_listbox.pack(side="left", fill="both", expand=True)
 
-# Buttons
-Button(root, text="Add Files", command=add_files, bg="#4CAF50", fg="white", width=15).pack(pady=5)
-Button(root, text="Merge PDFs", command=merge_pdfs, bg="#2196F3", fg="white", width=15).pack(pady=5)
-Button(root, text="Clear List", command=clear_list, bg="#f44336", fg="white", width=15).pack(pady=5)
+# Buttons Section
+button_frame = Frame(root, bg="#f4f4f4")
+button_frame.pack(pady=15)
+
+Button(
+    button_frame,
+    text="Move Up",
+    command=moveFileUP,
+    bg="#9ACBD0",
+    fg="#ffffff",
+    font=("Arial", 12, "bold"),
+    width=15,
+).grid(row=0, column=0, padx=10, pady=5)
+
+Button(
+    button_frame,
+    text="Move Down",
+    command=moveFileDown,
+    bg="#9ACBD0",
+    fg="#ffffff",
+    font=("Arial", 12, "bold"),
+    width=15,
+).grid(row=0, column=1, padx=10, pady=5)
+
+Button(
+    button_frame,
+    text="Add Files",
+    command=add_files,
+    bg="#4CAF50",
+    fg="white",
+    font=("Arial", 12, "bold"),
+    width=15,
+).grid(row=1, column=0, padx=10, pady=5)
+
+Button(
+    button_frame,
+    text="Merge PDFs",
+    command=merge_pdfs,
+    bg="#2196F3",
+    fg="white",
+    font=("Arial", 12, "bold"),
+    width=15,
+).grid(row=1, column=1, padx=10, pady=5)
+
+Button(
+    button_frame,
+    text="Clear List",
+    command=clear_list,
+    bg="#f44336",
+    fg="white",
+    font=("Arial", 12, "bold"),
+    width=15,
+).grid(row=2, column=0, columnspan=2, pady=5)
+
 
 # Run the GUI
 root.mainloop()

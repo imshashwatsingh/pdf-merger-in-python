@@ -43,12 +43,13 @@ pip install tkinterdnd2 PyPDF2
    ```bash
    python pdfMerger.py
    ```
-4. Drag and drop your PDF files into the window or use the "Add Files" button to select them.
-5. Click on "Merge PDFs" to combine the files into a single PDF.
+4. Use the "Add Files" button to select them.
+5. After Selecting a file, Use the "Move Up" or "Move Down" to change the order of merging your pdfs button to select them.
+6. Click on "Merge PDFs" to combine the files into a single PDF.
+7. Click on "Clear List" to remove all selected files.
 
 ## Usage
 
-- **Drag and Drop**: Drag PDF files directly into the window.
 - **Add Files**: Use the file dialog to select PDF files from your file system.
 - **Merge PDFs**: Click the "Merge PDFs" button to combine the selected PDFs into a new file.
 - **Clear List**: If you want to remove all files from the list, click "Clear List".
