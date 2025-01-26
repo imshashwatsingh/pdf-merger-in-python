@@ -1,7 +1,7 @@
 
 # PDF Merger Tool in Python
 
-Welcome to the **PDF Merger Tool**! This easy-to-use tool allows you to merge multiple PDF files into a single PDF with just a few clicks. With a simple drag-and-drop interface, you can quickly select and combine your PDFs without any hassle.
+Welcome to the **PDF Merger Tool**! This easy-to-use tool allows you to merge multiple PDF files into a single PDF with just a few clicks. You can quickly select and combine your PDFs without any hassle.
 
 ## Features
 
